@@ -28,6 +28,11 @@ JSON-EXPR (working title) is experimental library to build complex search criter
 	]
 }
 ```
+
+## Project status
+
+Proof of concept
+
 ## Requirements
 
 * PHP >= 7.0
