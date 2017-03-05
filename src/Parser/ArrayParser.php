@@ -9,24 +9,11 @@ use AdamWojs\FilterBuilder\Expression\Logical\LogicalAnd;
 use AdamWojs\FilterBuilder\Expression\NodeInterface;
 use AdamWojs\FilterBuilder\Expression\Value;
 
-
-/**
- * ArrayParser
- *
-
- */
-class Token
-{
-    const ID = 1;
-    const VALUE = 2;
-    const PREFIX_OPERATOR = 3;
-    const INFIX_OPERATOR = 4;
-}
-
 class ArrayParser implements ParserInterface
 {
     /** @var array */
     private $infix = [];
+    /** @var array */
     private $prefix = [];
 
     public function __construct()
@@ -44,13 +31,19 @@ class ArrayParser implements ParserInterface
         };
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function parse(array $node): NodeInterface
+    {
+        return $this->expr($node);
+    }
+
     public function expr(array $node)
     {
         try {
-            var_dump("CZY NODE JEST OPERATOREM LOGICZNYM! ?", $node);
             return $this->logical_operator($node);
         } catch (\Exception $ex) {
-            var_dump("NODE NIE JEST OPERATOREM LOGICZNYM!", $node);
             return $this->cmp($node);
         }
     }
@@ -104,16 +97,6 @@ class ArrayParser implements ParserInterface
         return new Id($token);
     }
 
-
-    /**
-     * @inheritdoc
-     */
-    public function parse(array $node): NodeInterface
-    {
-        return $this->expr($node);
-    }
-
-
     private function isLogicalOperator($value): bool
     {
         return isset($this->prefix[$value]);
@@ -122,20 +105,5 @@ class ArrayParser implements ParserInterface
     private function isCmpOperator($value): bool
     {
         return isset($this->infix[$value]);
-    }
-
-    private function isAssoc(&$array)
-    {
-        if (!is_array($array)) {
-            return false;
-        }
-
-        foreach ($array as $key => $value) {
-            if ($key !== (int)$key) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
