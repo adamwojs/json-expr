@@ -9,14 +9,14 @@ use AdamWojs\FilterBuilder\Expression\Value;
 class GenericParser implements ParserInterface
 {
     /** @var array */
-    private $infix = [];
+    private $compareOperators = [];
     /** @var array */
-    private $prefix = [];
+    private $logicalOperators = [];
 
-    public function __construct($logicalOperators, $compareOperator)
+    public function __construct(array $logicalOperators, array $compareOperators)
     {
-        $this->prefix = $logicalOperators;
-        $this->infix  = $compareOperator;
+        $this->logicalOperators = $logicalOperators;
+        $this->compareOperators = $compareOperators;
     }
 
     /**
@@ -41,12 +41,12 @@ class GenericParser implements ParserInterface
         $op = key($token);
 
         if ($this->isLogicalOperator($op)) {
-            return $this->prefix[$op]->parse(array_map(function ($token) {
+            return $this->logicalOperators[$op]->parse(array_map(function ($token) {
                 return $this->expr($token);
             }, $token[$op]));
         }
 
-        throw new \Exception("Unknow logical operator: $op");
+        throw new ParserException("Unknow logical operator: $op");
     }
 
     public function cmp($token)
@@ -59,17 +59,17 @@ class GenericParser implements ParserInterface
     public function cmp_operator(Id $id, $value)
     {
         if (!is_array($value)) {
-            // Domyślny operator porównania
-            return $this->infix['$eq']->parse($id, $this->value($value['$eq']));
+            // FIXME: Hardcoded "$eq" operator
+            return $this->compareOperators['$eq']->parse($id, $this->value($value['$eq']));
         }
 
         $op = key($value);
 
         if (!$this->isCmpOperator($op)) {
-            throw new \Exception("Unknow comperision operator $op");
+            throw new ParserException("Unknow comperision operator $op");
         }
 
-        return $this->infix[$op]->parse($id, $this->value($value[$op]));
+        return $this->compareOperators[$op]->parse($id, $this->value($value[$op]));
     }
 
     public function value($token)
@@ -80,7 +80,7 @@ class GenericParser implements ParserInterface
     public function id($token)
     {
         if (!is_string($token)) {
-            throw new \InvalidArgumentException("Invalid token: ID expected");
+            throw new ParserException("Invalid token: ID expected");
         }
 
         return new Id($token);
@@ -88,11 +88,11 @@ class GenericParser implements ParserInterface
 
     private function isLogicalOperator($value): bool
     {
-        return isset($this->prefix[$value]);
+        return isset($this->logicalOperators[$value]);
     }
 
     private function isCmpOperator($value): bool
     {
-        return isset($this->infix[$value]);
+        return isset($this->compareOperators[$value]);
     }
 }
