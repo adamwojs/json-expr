@@ -24,15 +24,15 @@ $builder->addLogicalOperator('$or', new LogicalOperatorParser(LogicalAnd::class)
 $builder->addLogicalOperator('$and', new LogicalOperatorParser(LogicalAnd::class));
 $builder->addLogicalOperator('$not', new LogicalOperatorParser(LogicalAnd::class));
 
+$builder->setDefaultCompareOperator('$eq');
+
 $parser = $builder->build();
 
 try {
     $expr = $parser->parse([
         '$and' => [
             [
-                'foo' => [
-                    '$eq' => 'Foo'
-                ]
+                'foo' => 'Foo'
             ],
             [
                 'bar' => [

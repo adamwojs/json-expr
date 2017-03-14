@@ -9,14 +9,17 @@ use AdamWojs\FilterBuilder\Expression\Value;
 class GenericParser implements ParserInterface
 {
     /** @var array */
-    private $compareOperators = [];
+    private $compareOperators;
     /** @var array */
-    private $logicalOperators = [];
+    private $logicalOperators;
+    /** @var string */
+    private $defaultCompareOperator;
 
-    public function __construct(array $logicalOperators, array $compareOperators)
+    public function __construct(array $logicalOperators, array $compareOperators, string $defaultCompareOperator = null)
     {
         $this->logicalOperators = $logicalOperators;
         $this->compareOperators = $compareOperators;
+        $this->defaultCompareOperator = $defaultCompareOperator;
     }
 
     /**
@@ -58,15 +61,13 @@ class GenericParser implements ParserInterface
 
     public function cmp_operator(Id $id, $value)
     {
-        if (!is_array($value)) {
-            // FIXME: Hardcoded "$eq" operator
-            return $this->compareOperators['$eq']->parse($id, $this->value($value['$eq']));
+        $op = $this->defaultCompareOperator;
+        if (is_array($value)) {
+            $op = key($value);
         }
 
-        $op = key($value);
-
         if (!$this->isCmpOperator($op)) {
-            throw new ParserException("Unknow comperision operator $op");
+            throw new ParserException("Unknow comperision operator: $op");
         }
 
         return $this->compareOperators[$op]->parse($id, $this->value($value[$op]));

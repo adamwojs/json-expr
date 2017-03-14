@@ -5,9 +5,11 @@ namespace AdamWojs\FilterBuilder\Parser;
 class GenericParserBuilder
 {
     /** @var array */
-    private $logicalOperators = [];
+    private $logicalOperators;
     /** @var array */
-    private $compareOperator = [];
+    private $compareOperator;
+    /** @var string */
+    private $defaultCompareOperator;
 
     /**
      * GenericParserBuilder constructor.
@@ -30,8 +32,18 @@ class GenericParserBuilder
         return $this;
     }
 
-    public function build() : ParserInterface
+    public function setDefaultCompareOperator(string $defaultCompareOperator)
     {
-        return new GenericParser($this->logicalOperators, $this->compareOperator);
+        $this->defaultCompareOperator = $defaultCompareOperator;
+        return $this;
+    }
+
+    public function build(): ParserInterface
+    {
+        return new GenericParser(
+            $this->logicalOperators,
+            $this->compareOperator,
+            $this->defaultCompareOperator
+        );
     }
 }
