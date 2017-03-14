@@ -2,33 +2,21 @@
 
 namespace AdamWojs\FilterBuilder\Parser;
 
-use AdamWojs\FilterBuilder\Expression\Cmp\Eq;
-use AdamWojs\FilterBuilder\Expression\Cmp\Lt;
 use AdamWojs\FilterBuilder\Expression\Id;
-use AdamWojs\FilterBuilder\Expression\Logical\LogicalAnd;
 use AdamWojs\FilterBuilder\Expression\NodeInterface;
 use AdamWojs\FilterBuilder\Expression\Value;
 
-class ArrayParser implements ParserInterface
+class GenericParser implements ParserInterface
 {
     /** @var array */
     private $infix = [];
     /** @var array */
     private $prefix = [];
 
-    public function __construct()
+    public function __construct($logicalOperators, $compareOperator)
     {
-        $this->prefix['$and'] = function (array $args) {
-            return new LogicalAnd(...$args);
-        };
-
-        $this->infix['$eq'] = function (Id $id, $value) {
-            return new Eq($id, new Value($value['$eq']));
-        };
-
-        $this->infix['$lt'] = function (Id $id, $value) {
-            return new Lt($id, new Value($value['$lt']));
-        };
+        $this->prefix = $logicalOperators;
+        $this->infix  = $compareOperator;
     }
 
     /**
@@ -53,7 +41,7 @@ class ArrayParser implements ParserInterface
         $op = key($token);
 
         if ($this->isLogicalOperator($op)) {
-            return $this->prefix[$op](array_map(function ($token) {
+            return $this->prefix[$op]->parse(array_map(function ($token) {
                 return $this->expr($token);
             }, $token[$op]));
         }
@@ -71,7 +59,8 @@ class ArrayParser implements ParserInterface
     public function cmp_operator(Id $id, $value)
     {
         if (!is_array($value)) {
-            return $this->infix['$eq']($id, $value);
+            // Domyślny operator porównania
+            return $this->infix['$eq']->parse($id, $this->value($value['$eq']));
         }
 
         $op = key($value);
@@ -80,7 +69,7 @@ class ArrayParser implements ParserInterface
             throw new \Exception("Unknow comperision operator $op");
         }
 
-        return $this->infix[$op]($id, $value);
+        return $this->infix[$op]->parse($id, $this->value($value[$op]));
     }
 
     public function value($token)

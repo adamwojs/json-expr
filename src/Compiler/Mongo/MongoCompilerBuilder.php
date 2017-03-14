@@ -4,8 +4,8 @@ namespace AdamWojs\FilterBuilder\Compiler\Mongo;
 
 use AdamWojs\FilterBuilder\Compiler\CompilerInterface;
 use AdamWojs\FilterBuilder\Compiler\NodeVisitorInterface;
-use AdamWojs\FilterBuilder\Expression\Cmp\Eq;
-use AdamWojs\FilterBuilder\Expression\Cmp\Lt;
+use AdamWojs\FilterBuilder\Expression\Compare\Eq;
+use AdamWojs\FilterBuilder\Expression\Compare\Lt;
 use AdamWojs\FilterBuilder\Expression\NodeInterface;
 use AdamWojs\FilterBuilder\Expression\Id;
 use AdamWojs\FilterBuilder\Expression\Logical\LogicalAnd;
@@ -21,8 +21,18 @@ class MongoCompilerBuilder
         {
             public function visit(CompilerInterface $compiler, NodeInterface $expr)
             {
-                return [$compiler->compile($expr->getFirst()) => [
-                    '$eq' => $compiler->compile($expr->getSecond())
+                return [$compiler->compile($expr->getId()) => [
+                    '$eq' => $compiler->compile($expr->getValue())
+                ]];
+            }
+        });
+
+        $compiler->register(Lt::class, new class implements NodeVisitorInterface
+        {
+            public function visit(CompilerInterface $compiler, NodeInterface $expr)
+            {
+                return [$compiler->compile($expr->getId()) => [
+                    '$lt' => $compiler->compile($expr->getValue())
                 ]];
             }
         });
@@ -36,16 +46,6 @@ class MongoCompilerBuilder
                         return $compiler->compile($expr);
                     }, $expr->getArgs())
                 ];
-            }
-        });
-
-        $compiler->register(Lt::class, new class implements NodeVisitorInterface
-        {
-            public function visit(CompilerInterface $compiler, NodeInterface $expr)
-            {
-                return [$compiler->compile($expr->getFirst()) => [
-                    '$lt' => $compiler->compile($expr->getSecond())
-                ]];
             }
         });
 

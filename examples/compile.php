@@ -3,8 +3,8 @@
 require_once __DIR__."/../vendor/autoload.php";
 
 use AdamWojs\FilterBuilder\Compiler\Mongo\MongoCompilerBuilder;
-use AdamWojs\FilterBuilder\Expression\Cmp\Eq;
-use AdamWojs\FilterBuilder\Expression\Cmp\Lt;
+use AdamWojs\FilterBuilder\Expression\Compare\Eq;
+use AdamWojs\FilterBuilder\Expression\Compare\Lt;
 use AdamWojs\FilterBuilder\Expression\Id;
 use AdamWojs\FilterBuilder\Expression\Logical\LogicalAnd;
 use AdamWojs\FilterBuilder\Expression\Value;
