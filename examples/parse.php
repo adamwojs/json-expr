@@ -12,6 +12,7 @@ use AdamWojs\FilterBuilder\Parser\CompareOperatorParser;
 use AdamWojs\FilterBuilder\Parser\GenericParserBuilder;
 use AdamWojs\FilterBuilder\Parser\LogicalOperatorParser;
 use AdamWojs\FilterBuilder\Parser\ParserException;
+use AdamWojs\FilterBuilder\Parser\SymbolTable;
 
 $builder = new GenericParserBuilder();
 $builder->addCompareOperator('$eq', new CompareOperatorParser(Eq::class));
@@ -25,6 +26,9 @@ $builder->addLogicalOperator('$and', new LogicalOperatorParser(LogicalAnd::class
 $builder->addLogicalOperator('$not', new LogicalOperatorParser(LogicalAnd::class));
 
 $builder->setDefaultCompareOperator('$eq');
+$builder->setSymbolTable(new SymbolTable([
+    'foo', 'bar'
+]));
 
 $parser = $builder->build();
 

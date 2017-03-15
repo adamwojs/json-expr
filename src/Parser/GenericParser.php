@@ -14,12 +14,19 @@ class GenericParser implements ParserInterface
     private $logicalOperators;
     /** @var string */
     private $defaultCompareOperator;
+    /** @var SymbolTable */
+    private $symbolTable;
 
-    public function __construct(array $logicalOperators, array $compareOperators, string $defaultCompareOperator = null)
+    public function __construct(
+        array $logicalOperators,
+        array $compareOperators,
+        string $defaultCompareOperator = null,
+        SymbolTableInterface $symbolTable = null)
     {
         $this->logicalOperators = $logicalOperators;
         $this->compareOperators = $compareOperators;
         $this->defaultCompareOperator = $defaultCompareOperator;
+        $this->symbolTable = $symbolTable;
     }
 
     /**
@@ -32,30 +39,23 @@ class GenericParser implements ParserInterface
 
     protected function parseExpression(array $node)
     {
-        try {
-            return $this->parseLogicalOperator($node);
-        } catch (\Exception $ex) {
-            return $this->parseComparision($node);
-        }
-    }
-
-    protected function parseLogicalOperator($node)
-    {
-        $op = key($node);
-
-        if ($this->isLogicalOperator($op)) {
-            return $this->logicalOperators[$op]->parse(array_map(function ($node) {
-                return $this->parseExpression($node);
-            }, $node[$op]));
+        $key = key($node);
+        if ($this->isLogicalOperator($key)) {
+            return $this->parseLogicalOperator($key, $node);
         }
 
-        throw new ParserException("Undefined logical operator: $op");
+        return $this->parseComparision($key, $node);
     }
 
-    protected function parseComparision($node)
+    protected function parseLogicalOperator(string $op, array $node)
     {
-        $id = key($node);
+        return $this->logicalOperators[$op]->parse(array_map(function ($node) {
+            return $this->parseExpression($node);
+        }, $node[$op]));
+    }
 
+    protected function parseComparision(string $id, array $node)
+    {
         return $this->parseComparisionOperator($this->parseId($id), $node[$id]);
     }
 
@@ -73,7 +73,7 @@ class GenericParser implements ParserInterface
             return $this->compareOperators[$op]->parse($id, $this->parseValue($value[$op]));
         }
 
-        throw new ParserException("Undefined comparision operator: $op");
+        throw new ParserException("Undefined operator: $op");
     }
 
     protected function parseValue($node)
@@ -84,10 +84,14 @@ class GenericParser implements ParserInterface
     protected function parseId($id)
     {
         if (!is_string($id)) {
-            throw new ParserException("Invalid id value: $id");
+            throw new ParserException("Invalid ID: $id");
         }
 
-        return new Id($id);
+        if ($this->symbolTable->isAllowedId($id)) {
+            return new Id($id);
+        }
+
+        throw new ParserException("Undefined ID: $id");
     }
 
     protected function isLogicalOperator($value): bool

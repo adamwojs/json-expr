@@ -10,6 +10,8 @@ class GenericParserBuilder
     private $compareOperator;
     /** @var string */
     private $defaultCompareOperator;
+    /** @var SymbolTableInterface */
+    private $symbolTable;
 
     /**
      * GenericParserBuilder constructor.
@@ -38,12 +40,19 @@ class GenericParserBuilder
         return $this;
     }
 
+    public function setSymbolTable(SymbolTableInterface $symbolTable)
+    {
+        $this->symbolTable = $symbolTable;
+        return $this;
+    }
+
     public function build(): ParserInterface
     {
         return new GenericParser(
             $this->logicalOperators,
             $this->compareOperator,
-            $this->defaultCompareOperator
+            $this->defaultCompareOperator,
+            $this->symbolTable
         );
     }
 }
