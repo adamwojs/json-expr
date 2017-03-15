@@ -27,72 +27,75 @@ class GenericParser implements ParserInterface
      */
     public function parse(array $node): NodeInterface
     {
-        return $this->expr($node);
+        return $this->parseExpression($node);
     }
 
-    public function expr(array $node)
+    protected function parseExpression(array $node)
     {
         try {
-            return $this->logical_operator($node);
+            return $this->parseLogicalOperator($node);
         } catch (\Exception $ex) {
-            return $this->cmp($node);
+            return $this->parseComparision($node);
         }
     }
 
-    public function logical_operator($token)
+    protected function parseLogicalOperator($node)
     {
-        $op = key($token);
+        $op = key($node);
 
         if ($this->isLogicalOperator($op)) {
-            return $this->logicalOperators[$op]->parse(array_map(function ($token) {
-                return $this->expr($token);
-            }, $token[$op]));
+            return $this->logicalOperators[$op]->parse(array_map(function ($node) {
+                return $this->parseExpression($node);
+            }, $node[$op]));
         }
 
-        throw new ParserException("Unknow logical operator: $op");
+        throw new ParserException("Undefined logical operator: $op");
     }
 
-    public function cmp($token)
+    protected function parseComparision($node)
     {
-        $id = key($token);
+        $id = key($node);
 
-        return $this->cmp_operator($this->id($id), $token[$id]);
+        return $this->parseComparisionOperator($this->parseId($id), $node[$id]);
     }
 
-    public function cmp_operator(Id $id, $value)
+    protected function parseComparisionOperator(Id $id, $value)
     {
-        $op = $this->defaultCompareOperator;
-        if (is_array($value)) {
-            $op = key($value);
+        if (!is_array($value)) {
+            // Use default comparision operator
+            return $this
+                ->compareOperators[$this->defaultCompareOperator]
+                ->parse($id, $this->parseValue($value));
         }
 
-        if (!$this->isCmpOperator($op)) {
-            throw new ParserException("Unknow comperision operator: $op");
+        $op = key($value);
+        if ($this->isCmpOperator($op)) {
+            return $this->compareOperators[$op]->parse($id, $this->parseValue($value[$op]));
         }
 
-        return $this->compareOperators[$op]->parse($id, $this->value($value[$op]));
+        throw new ParserException("Undefined comparision operator: $op");
     }
 
-    public function value($token)
+    protected function parseValue($node)
     {
-        return new Value($token);
+        return new Value($node);
     }
 
-    public function id($token)
+    protected function parseId($id)
     {
-        if (!is_string($token)) {
-            throw new ParserException("Invalid token: ID expected");
+        if (!is_string($id)) {
+            throw new ParserException("Invalid id value: $id");
         }
 
-        return new Id($token);
+        return new Id($id);
     }
 
-    private function isLogicalOperator($value): bool
+    protected function isLogicalOperator($value): bool
     {
         return isset($this->logicalOperators[$value]);
     }
 
-    private function isCmpOperator($value): bool
+    protected function isCmpOperator($value): bool
     {
         return isset($this->compareOperators[$value]);
     }
