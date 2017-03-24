@@ -1,6 +1,6 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Parser;
+namespace AdamWojs\FilterBuilder\Parser\OperatorProvider;
 
 use AdamWojs\FilterBuilder\Expression\NodeInterface;
 

@@ -3,7 +3,9 @@
 namespace AdamWojs\FilterBuilder\Parser;
 
 use AdamWojs\FilterBuilder\Expression\NodeInterface;
+use AdamWojs\FilterBuilder\Parser\OperatorProvider\CompareOperatorProviderInterface;
 use AdamWojs\FilterBuilder\Parser\Exception\ParserException;
+use AdamWojs\FilterBuilder\Parser\OperatorProvider\LogicalOperatorProviderInterface;
 use AdamWojs\FilterBuilder\Parser\SymbolTable\SymbolTableInterface;
 
 class Parser implements ParserInterface
