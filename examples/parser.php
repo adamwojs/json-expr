@@ -10,31 +10,31 @@ use AdamWojs\FilterBuilder\Expression\Compare\Lte;
 use AdamWojs\FilterBuilder\Expression\Logical\LogicalAnd;
 use AdamWojs\FilterBuilder\Expression\Logical\LogicalNot;
 use AdamWojs\FilterBuilder\Expression\Logical\LogicalOr;
-use AdamWojs\FilterBuilder\Parser\CompareOperatorFactory;
-use AdamWojs\FilterBuilder\Parser\LogicalOperatorFactory;
-use AdamWojs\FilterBuilder\Parser\ParserException;
+use AdamWojs\FilterBuilder\Parser\CompareOperatorProvider;
+use AdamWojs\FilterBuilder\Parser\LogicalOperatorProvider;
+use AdamWojs\FilterBuilder\Parser\Exception\ParserException;
 use AdamWojs\FilterBuilder\Parser\Parser;
 use AdamWojs\FilterBuilder\Parser\SymbolTable\SymbolTable;
 
-$compareOperatorFactory = new CompareOperatorFactory();
-$compareOperatorFactory->register('$eq', Eq::class, true);
-$compareOperatorFactory->register('$lt', Lt::class);
-$compareOperatorFactory->register('$lte', Lte::class);
-$compareOperatorFactory->register('$gt', Gt::class);
-$compareOperatorFactory->register('$gte', Gte::class);
+$compareOperatorProvider = new CompareOperatorProvider();
+$compareOperatorProvider->register('$eq', Eq::class, true);
+$compareOperatorProvider->register('$lt', Lt::class);
+$compareOperatorProvider->register('$lte', Lte::class);
+$compareOperatorProvider->register('$gt', Gt::class);
+$compareOperatorProvider->register('$gte', Gte::class);
 
-$logicalOperatorFactory = new LogicalOperatorFactory();
-$logicalOperatorFactory->register('$and', LogicalAnd::class);
-$logicalOperatorFactory->register('$or', LogicalOr::class);
-$logicalOperatorFactory->register('$not', LogicalNot::class);
+$logicalOperatorProvider = new LogicalOperatorProvider();
+$logicalOperatorProvider->register('$and', LogicalAnd::class);
+$logicalOperatorProvider->register('$or', LogicalOr::class);
+$logicalOperatorProvider->register('$not', LogicalNot::class);
 
 $symbolTable = new SymbolTable([
     'foo', 'bar'
 ]);
 
 $parser = new Parser(
-    $compareOperatorFactory,
-    $logicalOperatorFactory,
+    $compareOperatorProvider,
+    $logicalOperatorProvider,
     $symbolTable
 );
 

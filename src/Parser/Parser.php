@@ -11,22 +11,25 @@ class Parser implements ParserInterface
     const COMPARE_EXPR = 0;
     const LOGICAL_EXPR = 1;
 
-    /** @var CompareOperatorFactory */
-    private $compareOperatorFactory;
-    /** @var LogicalOperatorFactory */
-    private $logicalOperatorsFactory;
+    /** @var CompareOperatorProviderInterface */
+    private $compareOperatorProvider;
+    /** @var LogicalOperatorProviderInterface */
+    private $logicalOperatorsProvider;
     /** @var SymbolTableInterface */
     private $symbolTable;
 
-    public function __construct(CompareOperatorFactory $compareOperators,
-                                LogicalOperatorFactory $logicalOperators,
+    public function __construct(CompareOperatorProviderInterface $compareOperators,
+                                LogicalOperatorProviderInterface $logicalOperators,
                                 SymbolTableInterface $symbolTable)
     {
-        $this->compareOperatorFactory = $compareOperators;
-        $this->logicalOperatorsFactory = $logicalOperators;
+        $this->compareOperatorProvider = $compareOperators;
+        $this->logicalOperatorsProvider = $logicalOperators;
         $this->symbolTable = $symbolTable;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function parse(array $node): NodeInterface
     {
         return $this->expr($node);
@@ -51,7 +54,7 @@ class Parser implements ParserInterface
             return $this->expr($child);
         }, current($node));
 
-        return $this->logicalOperatorsFactory->factory($name, $args);
+        return $this->logicalOperatorsProvider->factory($name, $args);
     }
 
     protected function compareExpr(array $node): NodeInterface
@@ -68,7 +71,7 @@ class Parser implements ParserInterface
 
     protected function createCompareOperator(string $operator, string $id, $value): NodeInterface
     {
-        if (!$this->compareOperatorFactory->supports($operator)) {
+        if (!$this->compareOperatorProvider->supports($operator)) {
             throw new ParserException("Undefined comparison operator: $operator.");
         }
 
@@ -79,20 +82,20 @@ class Parser implements ParserInterface
 
         $val = $this->symbolTable->getValue($id, $value);
 
-        return $this->compareOperatorFactory->factory($operator, $ref, $val);
+        return $this->compareOperatorProvider->factory($operator, $ref, $val);
     }
 
     protected function resolveCompareOperator(string $id, array $node): array
     {
-        $op = null;
+        $op  = null;
         $val = null;
 
         // The comparison operator is given directly ?
         if (is_array($node[$id])) {
-            $op = key($node[$id]);
+            $op  = key($node[$id]);
             $val = current($node[$id]);
         } else {
-            $op = $this->compareOperatorFactory->getDefault();
+            $op  = $this->compareOperatorProvider->getDefaultOperator();
             $val = $node[$id];
         }
 
@@ -102,7 +105,7 @@ class Parser implements ParserInterface
     protected function resolveExpressionType(array $node)
     {
         $name = key($node);
-        if ($this->logicalOperatorsFactory->supports($name)) {
+        if ($this->logicalOperatorsProvider->supports($name)) {
             return self::LOGICAL_EXPR;
         }
 
