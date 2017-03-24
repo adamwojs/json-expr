@@ -2,7 +2,7 @@
 
 namespace AdamWojs\FilterBuilder\Expression;
 
-abstract class CompareOperator implements OperatorInterface
+abstract class CompareOperator implements NodeInterface
 {
     /** @var Id */
     protected $id;
@@ -11,7 +11,7 @@ abstract class CompareOperator implements OperatorInterface
     protected $value;
 
     /**
-     * BinaryComparision constructor.
+     * CompareOperator constructor.
      *
      * @param Id $id
      * @param Value $value
@@ -30,13 +30,5 @@ abstract class CompareOperator implements OperatorInterface
     public function getValue(): Value
     {
         return $this->value;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getType(): int
-    {
-        return OperatorInterface::TYPE_INFIX;
     }
 }

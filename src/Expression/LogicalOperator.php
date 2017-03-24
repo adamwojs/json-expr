@@ -2,7 +2,7 @@
 
 namespace AdamWojs\FilterBuilder\Expression;
 
-abstract class LogicalOperator implements OperatorInterface
+abstract class LogicalOperator implements NodeInterface
 {
     /** @var NodeInterface[] */
     protected $args;
@@ -19,13 +19,5 @@ abstract class LogicalOperator implements OperatorInterface
     public function getArgs(): array
     {
         return $this->args;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getType(): int
-    {
-        return OperatorInterface::TYPE_PREFIX;
     }
 }
