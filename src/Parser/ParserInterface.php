@@ -1,8 +1,8 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Parser;
+namespace AdamWojs\JsonExpr\Parser;
 
-use AdamWojs\FilterBuilder\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Expression\NodeInterface;
 
 interface ParserInterface
 {

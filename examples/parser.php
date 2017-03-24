@@ -2,19 +2,19 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use AdamWojs\FilterBuilder\Expression\Compare\Eq;
-use AdamWojs\FilterBuilder\Expression\Compare\Gt;
-use AdamWojs\FilterBuilder\Expression\Compare\Gte;
-use AdamWojs\FilterBuilder\Expression\Compare\Lt;
-use AdamWojs\FilterBuilder\Expression\Compare\Lte;
-use AdamWojs\FilterBuilder\Expression\Logical\LogicalAnd;
-use AdamWojs\FilterBuilder\Expression\Logical\LogicalNot;
-use AdamWojs\FilterBuilder\Expression\Logical\LogicalOr;
-use AdamWojs\FilterBuilder\Parser\OperatorProvider\CompareOperatorProvider;
-use AdamWojs\FilterBuilder\Parser\OperatorProvider\LogicalOperatorProvider;
-use AdamWojs\FilterBuilder\Parser\Exception\ParserException;
-use AdamWojs\FilterBuilder\Parser\Parser;
-use AdamWojs\FilterBuilder\Parser\SymbolTable\SymbolTable;
+use AdamWojs\JsonExpr\Expression\Compare\Eq;
+use AdamWojs\JsonExpr\Expression\Compare\Gt;
+use AdamWojs\JsonExpr\Expression\Compare\Gte;
+use AdamWojs\JsonExpr\Expression\Compare\Lt;
+use AdamWojs\JsonExpr\Expression\Compare\Lte;
+use AdamWojs\JsonExpr\Expression\Logical\LogicalAnd;
+use AdamWojs\JsonExpr\Expression\Logical\LogicalNot;
+use AdamWojs\JsonExpr\Expression\Logical\LogicalOr;
+use AdamWojs\JsonExpr\Parser\OperatorProvider\CompareOperatorProvider;
+use AdamWojs\JsonExpr\Parser\OperatorProvider\LogicalOperatorProvider;
+use AdamWojs\JsonExpr\Parser\Exception\ParserException;
+use AdamWojs\JsonExpr\Parser\Parser;
+use AdamWojs\JsonExpr\Parser\SymbolTable\SymbolTable;
 
 $compareOperatorProvider = new CompareOperatorProvider();
 $compareOperatorProvider->register('$eq', Eq::class, true);

@@ -1,15 +1,15 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Compiler\Mongo;
+namespace AdamWojs\JsonExpr\Compiler\Mongo;
 
-use AdamWojs\FilterBuilder\Compiler\CompilerInterface;
-use AdamWojs\FilterBuilder\Compiler\NodeVisitorInterface;
-use AdamWojs\FilterBuilder\Expression\Compare\Eq;
-use AdamWojs\FilterBuilder\Expression\Compare\Lt;
-use AdamWojs\FilterBuilder\Expression\NodeInterface;
-use AdamWojs\FilterBuilder\Expression\Id;
-use AdamWojs\FilterBuilder\Expression\Logical\LogicalAnd;
-use AdamWojs\FilterBuilder\Expression\Value;
+use AdamWojs\JsonExpr\Compiler\CompilerInterface;
+use AdamWojs\JsonExpr\Compiler\NodeVisitorInterface;
+use AdamWojs\JsonExpr\Expression\Compare\Eq;
+use AdamWojs\JsonExpr\Expression\Compare\Lt;
+use AdamWojs\JsonExpr\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Expression\Id;
+use AdamWojs\JsonExpr\Expression\Logical\LogicalAnd;
+use AdamWojs\JsonExpr\Expression\Value;
 
 class MongoCompilerBuilder
 {

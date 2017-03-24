@@ -1,8 +1,8 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Expression\Logical;
+namespace AdamWojs\JsonExpr\Expression\Logical;
 
-use AdamWojs\FilterBuilder\Expression\LogicalOperator;
+use AdamWojs\JsonExpr\Expression\LogicalOperator;
 
 class LogicalOr extends LogicalOperator
 {

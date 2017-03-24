@@ -1,5 +1,5 @@
 {
-  "name": "adamwojs/filters",
+  "name": "adamwojs/json-expr",
   "description": "",
   "minimum-stability": "stable",
   "license": "proprietary",
@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "AdamWojs\\FilterBuilder\\": "src/"
+      "AdamWojs\\JsonExpr\\": "src/"
     },
     "exclude-from-classmap": [
       "/src/Tests/"

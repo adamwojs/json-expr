@@ -1,8 +1,8 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Expression\Compare;
+namespace AdamWojs\JsonExpr\Expression\Compare;
 
-use AdamWojs\FilterBuilder\Expression\CompareOperator;
+use AdamWojs\JsonExpr\Expression\CompareOperator;
 
 class Gt extends CompareOperator
 {

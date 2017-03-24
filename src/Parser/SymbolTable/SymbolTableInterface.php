@@ -1,6 +1,6 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Parser\SymbolTable;
+namespace AdamWojs\JsonExpr\Parser\SymbolTable;
 
 /**
  * SymbolTableInterface

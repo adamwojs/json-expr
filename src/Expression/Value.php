@@ -1,6 +1,6 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Expression;
+namespace AdamWojs\JsonExpr\Expression;
 
 class Value implements NodeInterface
 {

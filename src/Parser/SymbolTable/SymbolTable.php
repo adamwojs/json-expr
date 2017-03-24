@@ -1,9 +1,9 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Parser\SymbolTable;
+namespace AdamWojs\JsonExpr\Parser\SymbolTable;
 
-use AdamWojs\FilterBuilder\Expression\Id;
-use AdamWojs\FilterBuilder\Expression\Value;
+use AdamWojs\JsonExpr\Expression\Id;
+use AdamWojs\JsonExpr\Expression\Value;
 
 /**
  * SymbolTable

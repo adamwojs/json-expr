@@ -1,6 +1,6 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Parser\Exception;
+namespace AdamWojs\JsonExpr\Parser\Exception;
 
 /**
  * Base parser exception.

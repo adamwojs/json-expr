@@ -2,12 +2,12 @@
 
 require_once __DIR__."/../vendor/autoload.php";
 
-use AdamWojs\FilterBuilder\Compiler\Mongo\MongoCompilerBuilder;
-use AdamWojs\FilterBuilder\Expression\Compare\Eq;
-use AdamWojs\FilterBuilder\Expression\Compare\Lt;
-use AdamWojs\FilterBuilder\Expression\Id;
-use AdamWojs\FilterBuilder\Expression\Logical\LogicalAnd;
-use AdamWojs\FilterBuilder\Expression\Value;
+use AdamWojs\JsonExpr\Compiler\Mongo\MongoCompilerBuilder;
+use AdamWojs\JsonExpr\Expression\Compare\Eq;
+use AdamWojs\JsonExpr\Expression\Compare\Lt;
+use AdamWojs\JsonExpr\Expression\Id;
+use AdamWojs\JsonExpr\Expression\Logical\LogicalAnd;
+use AdamWojs\JsonExpr\Expression\Value;
 
 $expr = new LogicalAnd(
     new Eq(new Id("foo"), new Value("Foo")),

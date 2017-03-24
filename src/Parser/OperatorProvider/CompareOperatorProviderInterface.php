@@ -1,8 +1,8 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Parser\OperatorProvider;
+namespace AdamWojs\JsonExpr\Parser\OperatorProvider;
 
-use AdamWojs\FilterBuilder\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Expression\NodeInterface;
 
 interface CompareOperatorProviderInterface
 {

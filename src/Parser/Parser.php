@@ -1,12 +1,12 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Parser;
+namespace AdamWojs\JsonExpr\Parser;
 
-use AdamWojs\FilterBuilder\Expression\NodeInterface;
-use AdamWojs\FilterBuilder\Parser\OperatorProvider\CompareOperatorProviderInterface;
-use AdamWojs\FilterBuilder\Parser\Exception\ParserException;
-use AdamWojs\FilterBuilder\Parser\OperatorProvider\LogicalOperatorProviderInterface;
-use AdamWojs\FilterBuilder\Parser\SymbolTable\SymbolTableInterface;
+use AdamWojs\JsonExpr\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Parser\OperatorProvider\CompareOperatorProviderInterface;
+use AdamWojs\JsonExpr\Parser\Exception\ParserException;
+use AdamWojs\JsonExpr\Parser\OperatorProvider\LogicalOperatorProviderInterface;
+use AdamWojs\JsonExpr\Parser\SymbolTable\SymbolTableInterface;
 
 class Parser implements ParserInterface
 {

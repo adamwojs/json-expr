@@ -1,10 +1,10 @@
 <?php
 
-namespace AdamWojs\FilterBuilder\Compiler\Mongo;
+namespace AdamWojs\JsonExpr\Compiler\Mongo;
 
-use AdamWojs\FilterBuilder\Compiler\CompilerInterface;
-use AdamWojs\FilterBuilder\Compiler\NodeVisitorInterface;
-use AdamWojs\FilterBuilder\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Compiler\CompilerInterface;
+use AdamWojs\JsonExpr\Compiler\NodeVisitorInterface;
+use AdamWojs\JsonExpr\Expression\NodeInterface;
 
 class MongoCompiler implements CompilerInterface
 {
