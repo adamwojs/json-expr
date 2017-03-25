@@ -3,6 +3,7 @@
 namespace AdamWojs\JsonExpr\Parser\OperatorProvider;
 
 use AdamWojs\JsonExpr\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Parser\Exception\OperatorProviderException;
 
 class LogicalOperatorProvider implements LogicalOperatorProviderInterface
 {
@@ -19,6 +20,14 @@ class LogicalOperatorProvider implements LogicalOperatorProviderInterface
      */
     public function register(string $name, $class)
     {
+        if (!$this->isValidName($name)) {
+            throw new OperatorProviderException("Invalid operator name: $name");
+        }
+
+        if ($this->supports($name)) {
+            throw new OperatorProviderException("Logical operator $name is already registered.");
+        }
+
         return $this->operators[$name] = $class;
     }
 
@@ -27,6 +36,10 @@ class LogicalOperatorProvider implements LogicalOperatorProviderInterface
      */
     public function unregister(string $name)
     {
+        if (!$this->supports($name)) {
+            throw new OperatorProviderException("Unsupported logical operator $name.");
+        }
+
         unset($this->operators[$name]);
     }
 
@@ -35,6 +48,10 @@ class LogicalOperatorProvider implements LogicalOperatorProviderInterface
      */
     public function factory(string $name, $args): NodeInterface
     {
+        if (!$this->supports($name)) {
+            throw new OperatorProviderException("Unsupported logical operator $name.");
+        }
+
         return new $this->operators[$name](...$args);
     }
 
@@ -52,5 +69,10 @@ class LogicalOperatorProvider implements LogicalOperatorProviderInterface
     public function supports(string $name): bool
     {
         return isset($this->operators[$name]);
+    }
+
+    private function isValidName(string $name): bool
+    {
+        return !empty($name);
     }
 }
