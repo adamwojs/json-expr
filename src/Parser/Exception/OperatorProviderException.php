@@ -2,7 +2,7 @@
 
 namespace AdamWojs\JsonExpr\Parser\Exception;
 
-class OperatorProviderException extends \RuntimeException
+class OperatorProviderException extends ParserException
 {
     /**
      * OperatorProviderException constructor.
