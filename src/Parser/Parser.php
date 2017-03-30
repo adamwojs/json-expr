@@ -79,7 +79,7 @@ class Parser implements ParserInterface
 
         $ref = $this->symbolTable->getReference($id);
         if (!$ref) {
-            throw new ParserException("Undefined id reference: $id");
+            throw new ParserException("Undefined reference: $id");
         }
 
         $val = $this->symbolTable->getValue($id, $value);
