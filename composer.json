@@ -2,7 +2,7 @@
   "name": "adamwojs/json-expr",
   "description": "",
   "minimum-stability": "stable",
-  "license": "proprietary",
+  "license": "MIT",
   "authors": [
     {
       "name": "Adam Wójs",
