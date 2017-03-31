@@ -36,5 +36,5 @@ abstract class BaseLogicalOperatorTest extends TestCase
      * @param array $args
      * @return LogicalOperator
      */
-    protected abstract function createLogicalOperator(array $args);
+    abstract protected function createLogicalOperator(array $args);
 }

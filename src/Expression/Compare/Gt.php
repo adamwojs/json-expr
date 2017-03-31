@@ -6,5 +6,4 @@ use AdamWojs\JsonExpr\Expression\CompareOperator;
 
 class Gt extends CompareOperator
 {
-
 }

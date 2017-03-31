@@ -17,8 +17,7 @@ class MongoCompilerBuilder
     {
         $compiler = new MongoCompiler();
 
-        $compiler->register(Eq::class, new class implements NodeVisitorInterface
-        {
+        $compiler->register(Eq::class, new class implements NodeVisitorInterface {
             public function visit(CompilerInterface $compiler, NodeInterface $expr)
             {
                 return [$compiler->compile($expr->getId()) => [
@@ -27,8 +26,7 @@ class MongoCompilerBuilder
             }
         });
 
-        $compiler->register(Lt::class, new class implements NodeVisitorInterface
-        {
+        $compiler->register(Lt::class, new class implements NodeVisitorInterface {
             public function visit(CompilerInterface $compiler, NodeInterface $expr)
             {
                 return [$compiler->compile($expr->getId()) => [
@@ -37,28 +35,25 @@ class MongoCompilerBuilder
             }
         });
 
-        $compiler->register(LogicalAnd::class, new class implements NodeVisitorInterface
-        {
+        $compiler->register(LogicalAnd::class, new class implements NodeVisitorInterface {
             public function visit(CompilerInterface $compiler, NodeInterface $expr)
             {
                 return [
-                    '$and' => array_map(function($expr) use($compiler) {
+                    '$and' => array_map(function ($expr) use ($compiler) {
                         return $compiler->compile($expr);
                     }, $expr->getArgs())
                 ];
             }
         });
 
-        $compiler->register(Id::class, new class implements NodeVisitorInterface
-        {
+        $compiler->register(Id::class, new class implements NodeVisitorInterface {
             public function visit(CompilerInterface $compiler, NodeInterface $expr)
             {
                 return $expr->getId();
             }
         });
 
-        $compiler->register(Value::class, new class implements NodeVisitorInterface
-        {
+        $compiler->register(Value::class, new class implements NodeVisitorInterface {
             public function visit(CompilerInterface $compiler, NodeInterface $expr)
             {
                 return $expr->getValue();

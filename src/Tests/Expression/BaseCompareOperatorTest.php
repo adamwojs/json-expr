@@ -28,5 +28,5 @@ abstract class BaseCompareOperatorTest extends TestCase
      *
      * @return CompareOperator
      */
-    protected abstract function createCompareOperator(Id $id, Value $value);
+    abstract protected function createCompareOperator(Id $id, Value $value);
 }

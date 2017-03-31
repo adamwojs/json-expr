@@ -6,5 +6,4 @@ use AdamWojs\JsonExpr\Expression\LogicalOperator;
 
 class LogicalOr extends LogicalOperator
 {
-
 }
