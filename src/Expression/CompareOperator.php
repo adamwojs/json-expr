@@ -31,4 +31,12 @@ abstract class CompareOperator implements NodeInterface
     {
         return $this->value;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function accept(NodeVisitorInterface $visitor)
+    {
+        return $visitor->visitCompareOperator($this);
+    }
 }

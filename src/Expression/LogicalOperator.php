@@ -20,4 +20,12 @@ abstract class LogicalOperator implements NodeInterface
     {
         return $this->args;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function accept(NodeVisitorInterface $visitor)
+    {
+        return $visitor->visitLogicalOperator($this);
+    }
 }

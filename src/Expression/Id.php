@@ -16,4 +16,12 @@ class Id implements NodeInterface
     {
         return $this->id;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function accept(NodeVisitorInterface $visitor)
+    {
+        return $visitor->visitId($this);
+    }
 }

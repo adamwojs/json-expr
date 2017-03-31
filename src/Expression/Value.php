@@ -16,4 +16,12 @@ class Value implements NodeInterface
     {
         return $this->value;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function accept(NodeVisitorInterface $visitor)
+    {
+        return $visitor->visitValue($this);
+    }
 }

@@ -3,6 +3,7 @@
 namespace AdamWojs\JsonExpr\Tests\Mock;
 
 use AdamWojs\JsonExpr\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Expression\NodeVisitorInterface;
 
 class NodeMock implements NodeInterface
 {
@@ -13,5 +14,13 @@ class NodeMock implements NodeInterface
     {
         $this->type = $type;
         $this->args = $args;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function accept(NodeVisitorInterface $visitor)
+    {
+        /** Do nothing */
     }
 }
