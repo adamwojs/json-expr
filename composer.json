@@ -1,6 +1,6 @@
 {
   "name": "adamwojs/json-expr",
-  "description": "",
+  "description": "Experimental library to build complex search criteria in MongoDB style",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
