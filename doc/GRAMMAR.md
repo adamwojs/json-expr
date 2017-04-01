@@ -5,9 +5,9 @@ Grammar recognized by parser
     LOGICAL_EXPR ::= LOGICAL_OPEATOR '{' EXPR+ '}'
     LOGICAL_OPEATOR ::= '$and'|'$or'|'$not'
     COMPARE_EXPR ::= COMPARE | COMPARE_EXPR_WITH_DEFAULT_OPERATOR
-    COMPARE ::= ID '=>' '{' COMPARE_OPEATOR '=>' VALUE '}'
+    COMPARE ::= ID '=>' '{' COMPARE_OPERATOR '=>' VALUE '}'
     COMPARE_EXPR_WITH_DEFAULT_OPERATOR ::= ID '=>' VALUE
-    COMPARE_OPEATOR ::= '$eq'|'$gt'|'$lt'|'$gte'|'$lte'
+    COMPARE_OPERATOR ::= '$eq'|'$gt'|'$lt'|'$gte'|'$lte'
     ID ::= {a-zA-Z_}{a-zA-Z0-9_}+
     VALUE ::= ...
 
