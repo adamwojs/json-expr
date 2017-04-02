@@ -36,7 +36,7 @@ class ParserTest extends TestCase
 
     public function testParseUndefinedExpressionType()
     {
-        /** It should't happend  */
+        /** It shouldn't happen */
     }
 
     public function testParseUndefinedComparisonOperator()
