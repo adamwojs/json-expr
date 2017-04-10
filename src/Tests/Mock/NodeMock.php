@@ -2,10 +2,10 @@
 
 namespace AdamWojs\JsonExpr\Tests\Mock;
 
-use AdamWojs\JsonExpr\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Expression\ExpressionInterface;
 use AdamWojs\JsonExpr\Expression\NodeVisitorInterface;
 
-class NodeMock implements NodeInterface
+class NodeMock implements ExpressionInterface
 {
     private $type;
     private $args;

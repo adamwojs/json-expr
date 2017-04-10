@@ -2,7 +2,7 @@
 
 namespace AdamWojs\JsonExpr\Parser\OperatorProvider;
 
-use AdamWojs\JsonExpr\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Expression\ExpressionInterface;
 use AdamWojs\JsonExpr\Parser\Exception\OperatorProviderException;
 
 class LogicalOperatorProvider implements LogicalOperatorProviderInterface
@@ -46,7 +46,7 @@ class LogicalOperatorProvider implements LogicalOperatorProviderInterface
     /**
      * @inheritdoc
      */
-    public function factory(string $name, $args): NodeInterface
+    public function factory(string $name, $args): ExpressionInterface
     {
         if (!$this->supports($name)) {
             throw new OperatorProviderException("Unsupported logical operator $name.");

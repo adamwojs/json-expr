@@ -2,9 +2,9 @@
 
 namespace AdamWojs\JsonExpr\Parser;
 
-use AdamWojs\JsonExpr\Expression\NodeInterface;
-use AdamWojs\JsonExpr\Parser\OperatorProvider\CompareOperatorProviderInterface;
+use AdamWojs\JsonExpr\Expression\ExpressionInterface;
 use AdamWojs\JsonExpr\Parser\Exception\ParserException;
+use AdamWojs\JsonExpr\Parser\OperatorProvider\CompareOperatorProviderInterface;
 use AdamWojs\JsonExpr\Parser\OperatorProvider\LogicalOperatorProviderInterface;
 use AdamWojs\JsonExpr\Parser\SymbolTable\SymbolTableInterface;
 
@@ -32,12 +32,12 @@ class Parser implements ParserInterface
     /**
      * @inheritdoc
      */
-    public function parse(array $node): NodeInterface
+    public function parse(array $node): ExpressionInterface
     {
         return $this->expr($node);
     }
 
-    protected function expr(array $node): NodeInterface
+    protected function expr(array $node): ExpressionInterface
     {
         switch ($this->resolveExpressionType($node)) {
             case self::LOGICAL_EXPR:
@@ -49,7 +49,7 @@ class Parser implements ParserInterface
         }
     }
 
-    protected function logicalExpr(array $node): NodeInterface
+    protected function logicalExpr(array $node): ExpressionInterface
     {
         $name = key($node);
         $args = array_map(function ($child) {
@@ -59,19 +59,19 @@ class Parser implements ParserInterface
         return $this->logicalOperatorsProvider->factory($name, $args);
     }
 
-    protected function compareExpr(array $node): NodeInterface
+    protected function compareExpr(array $node): ExpressionInterface
     {
         $id = key($node);
 
         list(
             $operator,
             $value
-        ) = $this->resolveCompareOperator($id, $node);
+            ) = $this->resolveCompareOperator($id, $node);
 
         return $this->createCompareOperator($operator, $id, $value);
     }
 
-    protected function createCompareOperator(string $operator, string $id, $value): NodeInterface
+    protected function createCompareOperator(string $operator, string $id, $value): ExpressionInterface
     {
         if (!$this->compareOperatorProvider->supports($operator)) {
             throw new ParserException("Undefined comparison operator: $operator.");
@@ -89,15 +89,15 @@ class Parser implements ParserInterface
 
     protected function resolveCompareOperator(string $id, array $node): array
     {
-        $op  = null;
+        $op = null;
         $val = null;
 
         // The comparison operator is given directly ?
         if (is_array($node[$id])) {
-            $op  = key($node[$id]);
+            $op = key($node[$id]);
             $val = current($node[$id]);
         } else {
-            $op  = $this->compareOperatorProvider->getDefaultOperator();
+            $op = $this->compareOperatorProvider->getDefaultOperator();
             $val = $node[$id];
         }
 

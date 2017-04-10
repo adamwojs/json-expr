@@ -8,7 +8,7 @@ interface NodeVisitorInterface
 
     public function visitValue(Value $node);
 
-    public function visitLogicalOperator(NodeInterface $node);
+    public function visitLogicalOperator(ExpressionInterface $node);
 
-    public function visitCompareOperator(NodeInterface $node);
+    public function visitCompareOperator(ExpressionInterface $node);
 }

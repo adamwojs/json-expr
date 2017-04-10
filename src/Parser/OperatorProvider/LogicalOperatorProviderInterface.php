@@ -2,7 +2,7 @@
 
 namespace AdamWojs\JsonExpr\Parser\OperatorProvider;
 
-use AdamWojs\JsonExpr\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Expression\ExpressionInterface;
 
 interface LogicalOperatorProviderInterface
 {
@@ -14,5 +14,5 @@ interface LogicalOperatorProviderInterface
 
     public function supports(string $name): bool;
 
-    public function factory(string $name, $args): NodeInterface;
+    public function factory(string $name, $args): ExpressionInterface;
 }

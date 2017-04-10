@@ -2,7 +2,7 @@
 
 namespace AdamWojs\JsonExpr\Expression;
 
-abstract class CompareOperator implements NodeInterface
+abstract class CompareOperator implements ExpressionInterface
 {
     /** @var Id */
     protected $id;

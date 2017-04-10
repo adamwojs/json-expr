@@ -2,7 +2,7 @@
 
 namespace AdamWojs\JsonExpr\Parser\OperatorProvider;
 
-use AdamWojs\JsonExpr\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Expression\ExpressionInterface;
 use AdamWojs\JsonExpr\Parser\Exception\OperatorProviderException;
 
 class CompareOperatorProvider implements CompareOperatorProviderInterface
@@ -52,7 +52,7 @@ class CompareOperatorProvider implements CompareOperatorProviderInterface
     /**
      * @inheritdoc
      */
-    public function factory(string $name, $ref, $val): NodeInterface
+    public function factory(string $name, $ref, $val): ExpressionInterface
     {
         if (!$this->supports($name)) {
             throw new OperatorProviderException("Unsupported compare operator $name.");

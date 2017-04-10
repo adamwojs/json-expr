@@ -2,12 +2,12 @@
 
 namespace AdamWojs\JsonExpr\Expression;
 
-abstract class LogicalOperator implements NodeInterface
+abstract class LogicalOperator implements ExpressionInterface
 {
-    /** @var NodeInterface[] */
+    /** @var ExpressionInterface[] */
     protected $args;
 
-    public function __construct(NodeInterface ...$args)
+    public function __construct(ExpressionInterface ...$args)
     {
         if (empty($args)) {
             throw new \InvalidArgumentException("Minimum 1 argument required.");

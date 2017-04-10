@@ -2,9 +2,9 @@
 
 namespace AdamWojs\JsonExpr\Parser;
 
-use AdamWojs\JsonExpr\Expression\NodeInterface;
+use AdamWojs\JsonExpr\Expression\ExpressionInterface;
 
 interface ParserInterface
 {
-    public function parse(array $node): NodeInterface;
+    public function parse(array $node): ExpressionInterface;
 }

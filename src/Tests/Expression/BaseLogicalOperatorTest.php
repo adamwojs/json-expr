@@ -2,8 +2,8 @@
 
 namespace AdamWojs\JsonExpr\Tests\Expression;
 
+use AdamWojs\JsonExpr\Expression\ExpressionInterface;
 use AdamWojs\JsonExpr\Expression\LogicalOperator;
-use AdamWojs\JsonExpr\Expression\NodeInterface;
 use PHPUnit\Framework\TestCase;
 
 abstract class BaseLogicalOperatorTest extends TestCase
@@ -11,8 +11,8 @@ abstract class BaseLogicalOperatorTest extends TestCase
     public function testConstruct()
     {
         $args = [
-            $this->createMock(NodeInterface::class),
-            $this->createMock(NodeInterface::class)
+            $this->createMock(ExpressionInterface::class),
+            $this->createMock(ExpressionInterface::class)
         ];
 
         $operator = $this->createLogicalOperator($args);
